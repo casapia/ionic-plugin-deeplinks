@@ -20,6 +20,8 @@
 	<preference name="APP_DOMAIN_PATH_DYN" default="/" />
 	<preference name="APP_DOMAIN_ALT_APP" default="app.entel.cl" />
 	<preference name="APP_DOMAIN_ALT_WWW" default="www.entel.cl" />
+	<preference name="APP_DOMAIN_ALT_DEV" default="entel-dev.outsystemsenterprise.com" />
+	<preference name="APP_DOMAIN_ALT_TST" default="entel-tst.outsystemsenterprise.com" />
 	<preference name="APP_DOMAIN_ALT_MIPERFILPP" default="miperfil-pp.entel.cl" />
 	<preference name="APP_DOMAIN_ALT_MIPERFIL" default="miperfil.entel.cl" />
 
@@ -69,7 +71,6 @@
 				<data android:scheme="http" />
 				<data android:scheme="https" />
 				<data android:host="$APP_DOMAIN_ALT_WWW" />
-				<data android:host="$APP_DOMAIN_ALT_DEV" />
 				<data android:pathPrefix="/beneficios" />
 				<data android:path="/netflix" />
 				<data android:path="/netflix/" />
@@ -81,6 +82,8 @@
 				<category android:name="android.intent.category.BROWSABLE" />
 				<data android:scheme="http" />
 				<data android:scheme="https" />
+				<data android:host="$APP_DOMAIN_ALT_DEV" />
+				<data android:host="$APP_DOMAIN_ALT_TST" />
 				<data android:host="$APP_DOMAIN_ALT_MIPERFILPP" />
 				<data android:host="$APP_DOMAIN_ALT_MIPERFIL" />
 				<data android:path="/CL_Web_Unified_Payment_EU" />
@@ -125,6 +128,12 @@
 				<string>applinks:$APP_DOMAIN_ALT_WWW</string>
 			</array>
 			<array>
+				<string>applinks:$APP_DOMAIN_ALT_DEV</string>
+			</array>
+			<array>
+				<string>applinks:$APP_DOMAIN_ALT_TST</string>
+			</array>
+			<array>
 				<string>applinks:$APP_DOMAIN_ALT_MIPERFILPP</string>
 			</array>
 			<array>
@@ -141,6 +150,12 @@
 			</array>
 			<array>
 				<string>applinks:$APP_DOMAIN_ALT_WWW</string>
+			</array>
+			<array>
+				<string>applinks:$APP_DOMAIN_ALT_DEV</string>
+			</array>
+			<array>
+				<string>applinks:$APP_DOMAIN_ALT_TST</string>
 			</array>
 			<array>
 				<string>applinks:$APP_DOMAIN_ALT_MIPERFILPP</string>
