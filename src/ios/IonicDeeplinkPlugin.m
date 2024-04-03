@@ -30,6 +30,7 @@
 }
 
 - (void)onDeepLink:(CDVInvokedUrlCommand *)command {
+  [_handlers removeAllObjects];
   [_handlers addObject:command.callbackId];
   // Try to consume any events we got before we were listening
   [self sendToJs];
