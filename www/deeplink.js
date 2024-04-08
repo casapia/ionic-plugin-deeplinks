@@ -267,6 +267,12 @@ var IonicDeeplink = {
   getHardwareInfo: function (callback) {
     exec(callback, null, PLUGIN_NAME, 'getHardwareInfo', []);
   },
+  
+  onDeepLinkTrigger: function () {
+    return new Promise(function(resolve, reject) {
+      exec(resolve, reject, PLUGIN_NAME, "onDeepLink", []);
+    });
+  }
 };
 
 module.exports = IonicDeeplink;
