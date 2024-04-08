@@ -18,6 +18,5 @@
 - (void)sendToJs;
 
 - (CDVPluginResult*)createResult:(NSURL *)url;
-- (CDVPluginResult*)createResultPersistentIdentifier:(NSString *)persistentIdentifier;
 
 @end

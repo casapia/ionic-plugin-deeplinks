@@ -18,8 +18,6 @@
 - (void)canOpenApp:(CDVInvokedUrlCommand *)command {
   CDVPluginResult* result = nil;
 
-  NSLog(@"HandleLink canOpenApp");
-
   NSString* scheme = [command.arguments objectAtIndex:0];
 
   if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:scheme]]) {
@@ -33,7 +31,6 @@
 
 - (void)onDeepLink:(CDVInvokedUrlCommand *)command {
   [_handlers addObject:command.callbackId];
-  NSLog(@"HandleLink onDeepLink");
   // Try to consume any events we got before we were listening
   [self sendToJs];
 }
@@ -53,9 +50,6 @@
 }
 
 - (BOOL)checkUrl:(NSURL *)url {
-
-  NSLog(@"HandleLink checkUrl");
-
   if(url == nil) return NO;
     
   NSString* urlScheme = [[self.commandDelegate settings] objectForKey:@"url_scheme"];
@@ -83,17 +77,6 @@
 
 - (BOOL)handleContinueUserActivity:(NSUserActivity *)userActivity {
 
-  NSDictionary *userInfo = [userActivity userInfo];
-  NSString *siriIdentifier = [userInfo objectForKey:@"persistentIdentifier"];
-
-  NSLog(@"HandleLink siri identifier %@", siriIdentifier);
-  if (siriIdentifier != nil || [siriIdentifier length] > 0) {
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:userInfo];
-    [result setKeepCallbackAsBool:YES];
-    _lastEvent = result;
-    [self sendToJs];
-  }
-
   if (![userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb] || userActivity.webpageURL == nil) {
     return NO;
   }
@@ -102,14 +85,12 @@
   _lastEvent = [self createResult:url];
   NSLog(@"IonicDeepLinkPlugin: Handle continueUserActivity (internal) %@", url);
 
-  
   [self sendToJs];
 
   return NO;
 }
 
 - (void) sendToJs {
-  NSLog(@"HandleLink sendToJs");
   // Send the last event to JS if we have one
   if (_handlers.count == 0 || _lastEvent == nil) {
     return;
@@ -139,38 +120,11 @@
   return result;
 }
 
-- (CDVPluginResult *)createResultPersistentIdentifier:(NSString *)persistentIdentifier {
-  NSDictionary* data = @{
-    @"persistentIdentifier": persistentIdentifier
-  };
-
-  CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:data];
-  [result setKeepCallbackAsBool:YES];
-  return result;
-}
-
 - (void)getHardwareInfo:(CDVInvokedUrlCommand *)command {
-
-  NSLog(@"HandleLink getHardwareinfo");
-
   NSMutableDictionary *info = [[NSMutableDictionary alloc] init];
 
-  // Get the as id in a way that doesn't require it be linked
-  Class asIdManClass = NSClassFromString(@"ASIdentifierManager");
 
-  if(asIdManClass) {
-    SEL sharedManagerSel = NSSelectorFromString(@"sharedManager");
-    id sharedManager = ((id (*)(id, SEL))[asIdManClass methodForSelector:sharedManagerSel])(asIdManClass, sharedManagerSel);
-    SEL advertisingIdentifierSelector = NSSelectorFromString(@"advertisingIdentifier");
-    NSUUID *uuid = ((NSUUID* (*)(id, SEL))[sharedManager methodForSelector:advertisingIdentifierSelector])(sharedManager, advertisingIdentifierSelector);
-    NSString *adId = [uuid UUIDString];
-
-    // Check if ad tracking is disabled (happens on iOS 10+)
-    NSString *disabledString = @"00000000-0000-0000-0000-000000000000";
-    if (![adId isEqualToString:disabledString]) {
-      [info setObject:adId forKey:@"adid"];
-    }
-  }
+  // Removing part where advertisingIdentifier is being used to keep the functional part working.
 
   NSString *uuid = [[UIDevice currentDevice].identifierForVendor UUIDString];
 

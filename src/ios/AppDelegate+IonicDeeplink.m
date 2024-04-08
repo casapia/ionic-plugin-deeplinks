@@ -19,7 +19,6 @@ static NSString *const PLUGIN_NAME = @"IonicDeeplinkPlugin";
 @implementation AppDelegate (IonicDeeplinkPlugin)
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-    NSLog(@"DelegateLink openURL options");
     NSMutableString *sourceApp = [[NSMutableString alloc] init];
     NSMutableString *annotation = [[NSMutableString alloc] init];
     
@@ -35,7 +34,6 @@ static NSString *const PLUGIN_NAME = @"IonicDeeplinkPlugin";
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    NSLog(@"DelegateLink openURL sourceapp");
     IonicDeeplinkPlugin *plugin = [self.viewController getCommandInstance:PLUGIN_NAME];
 
     if(plugin == nil) {
@@ -59,7 +57,7 @@ static NSString *const PLUGIN_NAME = @"IonicDeeplinkPlugin";
           [openURLData setValue:annotation forKey:@"annotation"];
       }
 
-      // [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginHandleOpenURLNotification object:url]];
+      [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginHandleOpenURLNotification object:url]];
       [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginHandleOpenURLWithAppSourceAndAnnotationNotification object:openURLData]];
 
       // Send notice to the rest of our plugin that we didn't handle this URL
@@ -70,7 +68,6 @@ static NSString *const PLUGIN_NAME = @"IonicDeeplinkPlugin";
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
-    NSLog(@"DelegateLink continueUserActivity");
     // Pass it off to our plugin
     IonicDeeplinkPlugin *plugin = [self.viewController getCommandInstance:PLUGIN_NAME];
 
@@ -87,8 +84,6 @@ static NSString *const PLUGIN_NAME = @"IonicDeeplinkPlugin";
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-
-    NSLog(@"DelegateLink didReceiveRemoteNotification");
     // Pass the push notification to the plugin
     if([userInfo objectForKey:@"uri"] == nil) {
       return;
