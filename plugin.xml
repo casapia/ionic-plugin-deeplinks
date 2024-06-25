@@ -91,10 +91,6 @@
 				<data android:host="$APP_DOMAIN_ALT_TST" />
 				<data android:host="$APP_DOMAIN_ALT_MIPERFILPP" />
 				<data android:host="$APP_DOMAIN_ALT_MIPERFIL" />
-				<data android:path="/CL_Web_Unified_Payment_EU" />
-				<data android:path="/CL_Web_Unified_Payment_EU/" />
-				<data android:path="/MiEntelPublico/Recarga" />
-				<data android:path="/MiEntelPublico/Recarga/" />
 				<data android:path="/CL_Web_Reseller_Subscription_EU/NetflixLandingSubscribe" />
 				<data android:path="/CL_Web_Reseller_Subscription_EU/NetflixLandingSubscribe/" />
 			</intent-filter>
